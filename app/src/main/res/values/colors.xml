@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sage_green">#78977B</color>
+    <color name="dark_green">#304A35</color>
+    <color name="light_sage">#E8EFE5</color>
+    <color name="soft_white">#F5F7F2</color>
+    <color name="pure_white">#FFFFFF</color>
+    <color name="warm_orange">#E99A4A</color>
+    <color name="expiry_red">#C85D50</color>
+    <color name="text_dark">#29372C</color>
+    <color name="text_gray">#7B857C</color>
+    <color name="input_background">#F0F3ED</color>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.FridgeFoodSaver"
+        parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/sage_green</item>
+        <item name="colorOnPrimary">@color/pure_white</item>
+        <item name="colorSecondary">@color/warm_orange</item>
+        <item name="android:statusBarColor">@color/soft_white</item>
+        <item name="android:navigationBarColor">@color/soft_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/soft_white</item>
+    </style>
+</resources>
