@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_white"
+    android:background="#F5F7F2"
     android:fillViewport="true">
 
     <LinearLayout
@@ -11,251 +11,59 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tvBack"
+        <Button
+            android:id="@+id/btnInventoryBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="← Kembali"
-            android:textColor="@color/sage_green"
-            android:textSize="15sp"
-            android:padding="4dp" />
+            android:textAllCaps="false" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Persediaan Makanan"
-            android:textColor="@color/dark_green"
-            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:text="Food Inventory"
+            android:textColor="#263A2D"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Pantau semua bahan makanan yang kamu simpan."
-            android:textColor="@color/text_gray"
+            android:text="Daftar bahan makanan di kulkas"
+            android:textColor="#718075"
             android:textSize="14sp" />
 
-        <!-- Search -->
-        <EditText
-            android:id="@+id/etSearchFood"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/bg_input"
-            android:hint="Cari nama bahan makanan..."
-            android:paddingHorizontal="15dp"
-            android:singleLine="true"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawablePadding="10dp"
-            android:inputType="text"
-            android:textSize="14sp" />
-
-        <!-- Category filter -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Filter kategori"
-            android:textColor="@color/text_dark"
-            android:textStyle="bold"
-            android:textSize="14sp" />
-
-        <Spinner
-            android:id="@+id/spFilterCategory"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="7dp"
-            android:background="@drawable/bg_input"
-            android:paddingHorizontal="12dp" />
-
-        <!-- Result count -->
-        <TextView
-            android:id="@+id/tvItemCount"
+            android:id="@+id/tvInventoryCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="4 bahan makanan"
-            android:textColor="@color/dark_green"
+            android:background="#E5EDE3"
+            android:padding="16dp"
+            android:text="Total bahan makanan: 0"
+            android:textColor="#345B40"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Food list -->
-        <LinearLayout
-            android:id="@+id/foodListContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical">
-
-            <!-- Item 1 -->
-            <LinearLayout
-                android:id="@+id/itemStrawberry"
-                android:tag="Buah-buahan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@color/pure_white"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="🍓  Stroberi"
-                    android:textColor="@color/text_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Kategori: Buah-buahan  •  Jumlah: 1 pack"
-                    android:textColor="@color/text_gray"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Kedaluwarsa dalam 1 hari"
-                    android:textColor="@color/expiry_red"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <!-- Item 2 -->
-            <LinearLayout
-                android:id="@+id/itemMilk"
-                android:tag="Susu dan Olahan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@color/pure_white"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="🥛  Susu"
-                    android:textColor="@color/text_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Kategori: Susu dan Olahan  •  Jumlah: 1 liter"
-                    android:textColor="@color/text_gray"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Kedaluwarsa dalam 2 hari"
-                    android:textColor="@color/warm_orange"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <!-- Item 3 -->
-            <LinearLayout
-                android:id="@+id/itemSpinach"
-                android:tag="Sayuran"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@color/pure_white"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="🥬  Bayam"
-                    android:textColor="@color/text_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Kategori: Sayuran  •  Jumlah: 5 ikat"
-                    android:textColor="@color/text_gray"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Masih aman disimpan"
-                    android:textColor="@color/sage_green"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <!-- Item 4 -->
-            <LinearLayout
-                android:id="@+id/itemEgg"
-                android:tag="Telur"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@color/pure_white"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="🥚  Telur"
-                    android:textColor="@color/text_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Kategori: Telur  •  Jumlah: 10 butir"
-                    android:textColor="@color/text_gray"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Masih aman disimpan"
-                    android:textColor="@color/sage_green"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
         <TextView
-            android:id="@+id/tvEmpty"
+            android:id="@+id/tvEmptyInventory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:gravity="center"
-            android:padding="25dp"
-            android:text="Bahan makanan tidak ditemukan."
-            android:textColor="@color/text_gray"
+            android:text="Belum ada bahan makanan."
+            android:textColor="#718075"
+            android:textSize="15sp"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/btnAddFood"
+        <LinearLayout
+            android:id="@+id/inventoryContainer"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:backgroundTint="@color/sage_green"
-            android:text="+ Tambah Bahan Makanan"
-            android:textAllCaps="false"
-            android:textColor="@color/pure_white"
-            android:textSize="15sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical" />
 
     </LinearLayout>
 </ScrollView>
