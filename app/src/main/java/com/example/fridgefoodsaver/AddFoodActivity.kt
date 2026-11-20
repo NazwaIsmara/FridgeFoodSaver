@@ -38,7 +38,6 @@ class AddFoodActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_food)
 
-        // Menghubungkan komponen XML
         val tvBack = findViewById<TextView>(R.id.tvBack)
 
         etFoodName = findViewById(R.id.etFoodName)
@@ -49,12 +48,10 @@ class AddFoodActivity : AppCompatActivity() {
         etNotes = findViewById(R.id.etNotes)
         btnSaveFood = findViewById(R.id.btnSaveFood)
 
-        // Tombol kembali
         tvBack.setOnClickListener {
             finish()
         }
 
-        // Pilihan kategori
         val categories = listOf(
             "Sayuran",
             "Buah-buahan",
@@ -78,7 +75,6 @@ class AddFoodActivity : AppCompatActivity() {
 
         spCategory.adapter = categoryAdapter
 
-        // Pilihan satuan
         val units = listOf(
             "buah",
             "kg",
@@ -103,7 +99,7 @@ class AddFoodActivity : AppCompatActivity() {
 
         spUnit.adapter = unitAdapter
 
-        // Pemilihan tanggal kedaluwarsa
+
         etExpiryDate.isFocusable = false
         etExpiryDate.isClickable = true
 
@@ -111,7 +107,6 @@ class AddFoodActivity : AppCompatActivity() {
             showDatePicker()
         }
 
-        // Simpan data
         btnSaveFood.setOnClickListener {
             saveFood()
         }
@@ -150,7 +145,7 @@ class AddFoodActivity : AppCompatActivity() {
         val expiryDate = etExpiryDate.text.toString().trim()
         val notes = etNotes.text.toString().trim()
 
-        // Validasi form
+
         if (name.isEmpty()) {
             etFoodName.error = "Nama bahan harus diisi"
             etFoodName.requestFocus()
@@ -172,7 +167,7 @@ class AddFoodActivity : AppCompatActivity() {
             return
         }
 
-        // Membuat objek bahan makanan
+
         val food = FoodItem(
             name = name,
             category = category,
@@ -181,7 +176,6 @@ class AddFoodActivity : AppCompatActivity() {
             notes = notes
         )
 
-        // Menyimpan ke Room Database
         btnSaveFood.isEnabled = false
 
         lifecycleScope.launch {
