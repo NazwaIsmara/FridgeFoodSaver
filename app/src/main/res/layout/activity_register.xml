@@ -12,7 +12,6 @@
         android:padding="28dp"
         android:gravity="center_horizontal">
 
-        <!-- Logo -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +19,6 @@
             android:text="🥬"
             android:textSize="55sp"/>
 
-        <!-- Nama Aplikasi -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +28,6 @@
             android:textSize="25sp"
             android:textStyle="bold"/>
 
-        <!-- Judul -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +45,6 @@
             android:textColor="@color/text_gray"
             android:textSize="14sp"/>
 
-        <!-- Nama -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +66,6 @@
             android:textColor="@color/text_dark"
             android:textColorHint="@color/text_gray"/>
 
-        <!-- Email -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +87,6 @@
             android:textColor="@color/text_dark"
             android:textColorHint="@color/text_gray"/>
 
-        <!-- Password -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,7 +108,6 @@
             android:textColor="@color/text_dark"
             android:textColorHint="@color/text_gray"/>
 
-        <!-- Confirm Password -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,7 +129,6 @@
             android:textColor="@color/text_dark"
             android:textColorHint="@color/text_gray"/>
 
-        <!-- Tombol Registrasi -->
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
@@ -150,7 +142,6 @@
             android:textSize="16sp"
             android:textStyle="bold"/>
 
-        <!-- Kembali ke Login -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
