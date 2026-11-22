@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.fridgefoodsaver.data.FoodDatabase
 import com.example.fridgefoodsaver.data.FoodItem
-import kotlinx.coroutines.Dispatchers
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -29,45 +27,74 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var recentContainer: LinearLayout
     private lateinit var tvEmptyAlert: TextView
     private lateinit var tvEmptyRecent: TextView
+    private lateinit var bottomNavigation: BottomNavigationView
+
+    private val foodDao by lazy {
+        FoodDatabase.getDatabase(applicationContext).foodDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        bindViews()
+        setupBottomNavigation()
+        observeFoodDatabase()
+    }
+
+    private fun bindViews() {
         tvTotalFood = findViewById(R.id.tvTotalFood)
         tvExpiringFood = findViewById(R.id.tvExpiringFood)
         alertContainer = findViewById(R.id.alertContainer)
         recentContainer = findViewById(R.id.recentContainer)
         tvEmptyAlert = findViewById(R.id.tvEmptyAlert)
         tvEmptyRecent = findViewById(R.id.tvEmptyRecent)
+        bottomNavigation = findViewById(R.id.bottomNavigation)
+    }
 
-        findViewById<Button>(R.id.btnAddFood).setOnClickListener {
-            startActivity(Intent(this, AddFoodActivity::class.java))
+    private fun setupBottomNavigation() {
+        bottomNavigation.selectedItemId = R.id.nav_home
+
+        bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.nav_home -> {
+                    true
+                }
+
+                R.id.nav_inventory -> {
+                    openPage(InventoryActivity::class.java)
+                    true
+                }
+
+                R.id.nav_add -> {
+                    openPage(AddFoodActivity::class.java)
+                    true
+                }
+
+                R.id.nav_notification -> {
+                    openPage(NotificationActivity::class.java)
+                    true
+                }
+
+                R.id.nav_profile -> {
+                    openPage(ProfileActivity::class.java)
+                    true
+                }
+
+                else -> false
+            }
         }
+    }
 
-        findViewById<Button>(R.id.btnOpenInventory).setOnClickListener {
-            startActivity(Intent(this, InventoryActivity::class.java))
-        }
-
-        findViewById<Button>(R.id.btnOpenProfile).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
-
-        findViewById<Button>(R.id.btnOpenNotifications).setOnClickListener {
-            startActivity(Intent(this, NotificationActivity::class.java))
-        }
-
-        observeFoodDatabase()
+    private fun openPage(destination: Class<*>) {
+        startActivity(Intent(this, destination))
     }
 
     private fun observeFoodDatabase() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                val database = withContext(Dispatchers.IO) {
-                    FoodDatabase.getDatabase(applicationContext)
-                }
-
-                database.foodDao().getAllFood().collect { foodList ->
+                foodDao.getAllFood().collect { foodList ->
                     updateDashboard(foodList)
                 }
             }
@@ -75,72 +102,123 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun updateDashboard(foodList: List<FoodItem>) {
-
-        // Menghitung seluruh bahan makanan
         tvTotalFood.text = foodList.size.toString()
 
-        // Mengambil bahan yang sudah kedaluwarsa atau
-        // akan kedaluwarsa dalam 3 hari
-        val attentionList = foodList
-            .map { food -> Pair(food, getDaysUntilExpiry(food.expiryDate)) }
-            .filter { it.second != null && it.second!! <= 3 }
-            .sortedBy { it.second }
+        val attentionList = foodList.mapNotNull { food ->
+            val days = getDaysUntilExpiry(food.expiryDate)
+            if (days != null && days <= 3) {
+                Pair(food, days)
+            } else {
+                null
+            }
+        }.sortedBy { it.second }
 
-        val expiringCount = attentionList.count {
-            it.second != null && it.second!! >= 0
-        }
-
+        val expiringCount = attentionList.count { it.second >= 0 }
         tvExpiringFood.text = expiringCount.toString()
 
-        // Menampilkan daftar peringatan
         alertContainer.removeAllViews()
 
         if (attentionList.isEmpty()) {
             tvEmptyAlert.visibility = View.VISIBLE
+            alertContainer.visibility = View.GONE
         } else {
             tvEmptyAlert.visibility = View.GONE
+            alertContainer.visibility = View.VISIBLE
 
-            attentionList.forEach { item ->
-                addAlertItem(item.first, item.second!!)
+            attentionList.forEach { (food, days) ->
+                addAlertItem(food, days)
             }
         }
 
-        // Menampilkan 3 bahan terbaru
         recentContainer.removeAllViews()
 
-        val recentItems = foodList.take(3)
+        val recentList = foodList.take(3)
 
-        if (recentItems.isEmpty()) {
+        if (recentList.isEmpty()) {
             tvEmptyRecent.visibility = View.VISIBLE
+            recentContainer.visibility = View.GONE
         } else {
             tvEmptyRecent.visibility = View.GONE
+            recentContainer.visibility = View.VISIBLE
 
-            recentItems.forEach { food ->
+            recentList.forEach { food ->
                 addRecentItem(food)
             }
         }
     }
 
-    private fun getDaysUntilExpiry(dateString: String): Int? {
+    private fun addAlertItem(food: FoodItem, days: Int) {
+        val itemLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, 10, 0, 10)
+        }
+
+        val nameText = TextView(this).apply {
+            text = food.name
+            textSize = 15f
+            setTextColor(android.graphics.Color.rgb(38, 61, 50))
+            setTypeface(null, Typeface.BOLD)
+        }
+
+        val statusText = TextView(this).apply {
+            text = when {
+                days < 0 -> "Sudah kedaluwarsa ${-days} hari"
+                days == 0 -> "Kedaluwarsa hari ini"
+                else -> "Kedaluwarsa dalam $days hari"
+            }
+            textSize = 13f
+            setTextColor(android.graphics.Color.rgb(212, 107, 53))
+        }
+
+        itemLayout.addView(nameText)
+        itemLayout.addView(statusText)
+        alertContainer.addView(itemLayout)
+    }
+
+    private fun addRecentItem(food: FoodItem) {
+        val itemText = TextView(this).apply {
+            text = "${getFoodEmoji(food.category)}  ${food.name}  •  ${food.quantity}"
+            textSize = 14f
+            setTextColor(android.graphics.Color.rgb(38, 61, 50))
+            setPadding(0, 12, 0, 12)
+        }
+
+        recentContainer.addView(itemText)
+    }
+
+    private fun getFoodEmoji(category: String): String {
+        return when (category.lowercase(Locale.getDefault())) {
+            "sayuran" -> "🥬"
+            "buah" -> "🍎"
+            "daging" -> "🥩"
+            "ikan" -> "🐟"
+            "minuman" -> "🥛"
+            "produk susu" -> "🧀"
+            "bumbu" -> "🧂"
+            else -> "🍱"
+        }
+    }
+
+    private fun getDaysUntilExpiry(expiryDate: String): Int? {
         return try {
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            formatter.isLenient = false
-            formatter.timeZone = TimeZone.getTimeZone("UTC")
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            dateFormat.isLenient = false
+            dateFormat.timeZone = TimeZone.getTimeZone("UTC")
 
-            val expiryDate = formatter.parse(dateString) ?: return null
-
-            val expiryCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-            expiryCalendar.time = expiryDate
-            expiryCalendar.set(Calendar.HOUR_OF_DAY, 0)
-            expiryCalendar.set(Calendar.MINUTE, 0)
-            expiryCalendar.set(Calendar.SECOND, 0)
-            expiryCalendar.set(Calendar.MILLISECOND, 0)
+            val expiry = dateFormat.parse(expiryDate) ?: return null
 
             val todayCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             todayCalendar.set(Calendar.HOUR_OF_DAY, 0)
             todayCalendar.set(Calendar.MINUTE, 0)
             todayCalendar.set(Calendar.SECOND, 0)
             todayCalendar.set(Calendar.MILLISECOND, 0)
+
+            val expiryCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            expiryCalendar.time = expiry
+            expiryCalendar.set(Calendar.HOUR_OF_DAY, 0)
+            expiryCalendar.set(Calendar.MINUTE, 0)
+            expiryCalendar.set(Calendar.SECOND, 0)
+            expiryCalendar.set(Calendar.MILLISECOND, 0)
 
             val difference = expiryCalendar.timeInMillis -
                     todayCalendar.timeInMillis
@@ -149,74 +227,6 @@ class DashboardActivity : AppCompatActivity() {
 
         } catch (e: Exception) {
             null
-        }
-    }
-
-    private fun addAlertItem(food: FoodItem, days: Int) {
-
-        val itemLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(0, 12, 0, 12)
-        }
-
-        val nameText = TextView(this).apply {
-            text = "${getFoodEmoji(food.category)}  ${food.name}"
-            textSize = 16f
-            setTextColor(getColor(R.color.text_dark))
-            setTypeface(null, Typeface.BOLD)
-        }
-
-        val statusText = TextView(this).apply {
-            text = when {
-                days < 0 -> "เลยวันหมดอายุแล้ว ${-days} hari"
-                days == 0 -> "Kedaluwarsa hari ini"
-                days == 1 -> "Kedaluwarsa dalam 1 hari"
-                else -> "Kedaluwarsa dalam $days hari"
-            }
-
-            textSize = 13f
-            setTextColor(
-                if (days <= 1) getColor(R.color.expiry_red)
-                else getColor(R.color.warm_orange)
-            )
-        }
-
-        itemLayout.addView(nameText)
-        itemLayout.addView(statusText)
-
-        alertContainer.addView(itemLayout)
-    }
-
-    private fun addRecentItem(food: FoodItem) {
-
-        val itemText = TextView(this).apply {
-            text = "${getFoodEmoji(food.category)}  ${food.name}     ${food.quantity}"
-            textSize = 15f
-            setTextColor(getColor(R.color.text_dark))
-            setPadding(16, 18, 16, 18)
-            setBackgroundColor(getColor(R.color.pure_white))
-        }
-
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        params.bottomMargin = 8
-
-        recentContainer.addView(itemText, params)
-    }
-
-    private fun getFoodEmoji(category: String): String {
-        return when (category) {
-            "Sayuran" -> "🥬"
-            "Buah-buahan" -> "🍎"
-            "Daging" -> "🥩"
-            "Seafood" -> "🐟"
-            "Susu dan Olahan" -> "🥛"
-            "Telur" -> "🥚"
-            "Minuman" -> "🥤"
-            else -> "🍱"
         }
     }
 }

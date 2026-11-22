@@ -1,241 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_white"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:background="#F5F7F2">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:clipToPadding="false">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fridge Food Saver"
-            android:textColor="@color/dark_green"
-            android:textSize="23sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Selamat datang kembali!"
-            android:textColor="@color/text_gray"
-            android:textSize="14sp" />
-
-        <!-- Greeting -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:background="@color/light_sage"
             android:orientation="vertical"
-            android:padding="18dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kelola makananmu dengan lebih mudah 🥑"
-                android:textColor="@color/dark_green"
-                android:textSize="18sp"
+                android:text="Fridge Food Saver"
+                android:textColor="#244B3C"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Pantau stok dan tanggal kedaluwarsa bahan makanan."
-                android:textColor="@color/text_dark"
+                android:layout_marginTop="5dp"
+                android:text="Kelola bahan makananmu dengan mudah."
+                android:textColor="#78847B"
                 android:textSize="14sp" />
 
-        </LinearLayout>
-
-        <!-- Summary -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Ringkasan Persediaan"
-            android:textColor="@color/text_dark"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="110dp"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                android:background="@color/pure_white"
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="20dp"
+                android:background="#DDEADF">
 
                 <TextView
-                    android:id="@+id/tvTotalFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/dark_green"
-                    android:textSize="28sp"
+                    android:text="Selamat datang!"
+                    android:textColor="#244B3C"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Bahan"
-                    android:textColor="@color/text_gray"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="6dp"
+                    android:text="Pantau persediaan dan tanggal kedaluwarsa bahan makananmu."
+                    android:textColor="#536B5D"
+                    android:textSize="14sp" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="110dp"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
-                android:background="@color/pure_white"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tvExpiringFood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/expiry_red"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Segera Kedaluwarsa"
-                    android:textColor="@color/text_gray"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Expiry Alert -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Perlu Diperhatikan"
-            android:textColor="@color/text_dark"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@color/pure_white"
-            android:orientation="vertical"
-            android:padding="16dp">
 
             <TextView
-                android:id="@+id/tvEmptyAlert"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Belum ada bahan yang perlu diperhatikan."
-                android:textColor="@color/text_gray"
-                android:textSize="14sp"
-                android:visibility="visible" />
+                android:layout_marginTop="26dp"
+                android:text="Ringkasan Persediaan"
+                android:textColor="#263D32"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/alertContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="7dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="#FFFFFF"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Bahan"
+                        android:textColor="#78847B"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvTotalFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="0"
+                        android:textColor="#244B3C"
+                        android:textSize="29sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="7dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="#FFF0E4"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Segera Kedaluwarsa"
+                        android:textColor="#9B633C"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvExpiringFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="0"
+                        android:textColor="#D46B35"
+                        android:textSize="29sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Perlu Diperhatikan"
+                android:textColor="#263D32"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:id="@+id/tvEmptyAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Belum ada bahan yang perlu diperhatikan."
+                    android:textColor="#78847B"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/alertContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Bahan Makanan Terbaru"
+                android:textColor="#263D32"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:id="@+id/tvEmptyRecent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Belum ada bahan makanan."
+                    android:textColor="#78847B"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/recentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
-        <!-- Recent Items -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Bahan Makanan Terbaru"
-            android:textColor="@color/text_dark"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:menu="@menu/bottom_navigation_menu"
+        app:labelVisibilityMode="labeled"
+        app:itemIconTint="#527B63"
+        app:itemTextColor="#244B3C"
+        app:elevation="8dp" />
 
-        <TextView
-            android:id="@+id/tvEmptyRecent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@color/pure_white"
-            android:padding="16dp"
-            android:text="Belum ada bahan makanan."
-            android:textColor="@color/text_gray"
-            android:textSize="14sp"
-            android:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/recentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical" />
-
-        <!-- Navigation Buttons -->
-        <Button
-            android:id="@+id/btnAddFood"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/sage_green"
-            android:text="+ Tambah Bahan Makanan"
-            android:textAllCaps="false"
-            android:textColor="@color/pure_white"
-            android:textSize="15sp" />
-
-        <Button
-            android:id="@+id/btnOpenInventory"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/dark_green"
-            android:text="Lihat Semua Bahan Makanan"
-            android:textAllCaps="false"
-            android:textColor="@color/pure_white"
-            android:textSize="15sp" />
-
-        <Button
-            android:id="@+id/btnOpenProfile"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
-            android:backgroundTint="@color/light_sage"
-            android:text="Profil Saya"
-            android:textAllCaps="false"
-            android:textColor="@color/dark_green"
-            android:textSize="15sp" />
-
-        <Button
-            android:id="@+id/btnOpenNotifications"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Notifikasi Kedaluwarsa"
-            android:textAllCaps="false" />
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
