@@ -9,179 +9,116 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="22dp">
+        android:padding="24dp">
 
         <TextView
             android:id="@+id/tvBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="4dp"
             android:text="← Kembali"
-            android:textColor="@color/sage_green"
-            android:textSize="15sp" />
+            android:textColor="#355E3B"
+            android:textSize="16sp"
+            android:paddingBottom="20dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
             android:text="Edit Bahan Makanan"
-            android:textColor="@color/dark_green"
+            android:textColor="#355E3B"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="Perbarui informasi persediaan makananmu."
-            android:textColor="@color/text_gray"
-            android:textSize="14sp" />
-
-        <!-- Food name -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Nama Bahan Makanan *"
-            android:textColor="@color/text_dark"
+            android:text="Perbarui informasi bahan makananmu."
+            android:textColor="@android:color/darker_gray"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:paddingBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Bahan Makanan" />
 
         <EditText
             android:id="@+id/etEditFoodName"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint="Nama bahan makanan"
-            android:inputType="textCapSentences"
-            android:paddingHorizontal="15dp"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp" />
-
-        <!-- Category -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Kategori *"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:hint="Contoh: Wortel"
+            android:inputType="textCapSentences" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kategori"
+            android:paddingTop="12dp" />
 
         <Spinner
             android:id="@+id/spEditCategory"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:paddingHorizontal="12dp" />
+            android:layout_height="wrap_content" />
 
-        <!-- Quantity -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Jumlah *"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/etEditQuantity"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_input"
-                android:hint="Jumlah"
-                android:inputType="numberDecimal"
-                android:paddingHorizontal="15dp"
-                android:textColor="@color/text_dark"
-                android:textSize="14sp" />
-
-            <Spinner
-                android:id="@+id/spEditUnit"
-                android:layout_width="125dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/bg_input"
-                android:paddingHorizontal="8dp" />
-        </LinearLayout>
-
-        <!-- Expiry date -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Tanggal Kedaluwarsa *"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:text="Jumlah"
+            android:paddingTop="12dp" />
+
+        <EditText
+            android:id="@+id/etEditQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contoh: 2"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Satuan"
+            android:paddingTop="12dp" />
+
+        <Spinner
+            android:id="@+id/spEditUnit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Kedaluwarsa"
+            android:paddingTop="12dp" />
 
         <EditText
             android:id="@+id/etEditExpiryDate"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:clickable="true"
-            android:focusable="false"
-            android:hint="Pilih tanggal"
-            android:paddingHorizontal="15dp"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp"
-            android:drawableEnd="@android:drawable/ic_menu_my_calendar"
-            android:drawablePadding="10dp" />
-
-        <!-- Notes -->
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Catatan (Opsional)"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:hint="dd/MM/yyyy"
+            android:focusable="false"
+            android:clickable="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Catatan"
+            android:paddingTop="12dp" />
 
         <EditText
             android:id="@+id/etEditNotes"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
+            android:layout_height="wrap_content"
+            android:hint="Tambahkan catatan (opsional)"
             android:gravity="top"
-            android:hint="Tambahkan catatan..."
-            android:inputType="textCapSentences|textMultiLine"
-            android:padding="15dp"
-            android:textColor="@color/text_dark"
-            android:textSize="14sp" />
+            android:minLines="3"
+            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/btnUpdateFood"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="25dp"
-            android:backgroundTint="@color/sage_green"
-            android:text="Simpan Perubahan"
-            android:textAllCaps="false"
-            android:textColor="@color/pure_white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="* Wajib diisi"
-            android:textColor="@color/text_gray"
-            android:textSize="12sp" />
+            android:text="Simpan Perubahan"
+            android:layout_marginTop="24dp" />
 
     </LinearLayout>
 </ScrollView>

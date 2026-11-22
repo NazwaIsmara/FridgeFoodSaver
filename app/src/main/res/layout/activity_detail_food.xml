@@ -194,7 +194,8 @@
             android:text="Edit Bahan Makanan"
             android:textAllCaps="false"
             android:textColor="@color/pure_white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/btnDeleteFood"
