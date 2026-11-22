@@ -35,6 +35,50 @@
             android:textColor="#718075"
             android:textSize="14sp" />
 
+        <EditText
+            android:id="@+id/etSearchFood"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#78947B"
+            android:hint="Cari nama bahan makanan..."
+            android:inputType="text"
+            android:padding="12dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Kategori"
+            android:textColor="#263A2D"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:backgroundTint="#78947B" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Status Kedaluwarsa"
+            android:textColor="#263A2D"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerExpiry"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:backgroundTint="#78947B" />
+
         <TextView
             android:id="@+id/tvInventoryCount"
             android:layout_width="match_parent"
