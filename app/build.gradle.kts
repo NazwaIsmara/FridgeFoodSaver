@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation("com.google.android.material:material:1.12.0")
 
     // Room Database
     implementation(libs.androidx.room.runtime)

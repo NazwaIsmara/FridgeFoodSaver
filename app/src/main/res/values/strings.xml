@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">FridgeFoodSaver</string>
+    <string name="app_name">Fridge Food Saver</string>
+    <string name="menu_home">Beranda</string>
+    <string name="menu_inventory">Inventory</string>
+    <string name="menu_add">Tambah</string>
+    <string name="menu_notification">Notifikasi</string>
+    <string name="menu_profile">Profil</string>
 </resources>
