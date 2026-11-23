@@ -1,23 +1,29 @@
 package com.example.fridgefoodsaver
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.fridgefoodsaver.data.FoodDatabase
 import com.example.fridgefoodsaver.data.FoodItem
+import com.example.fridgefoodsaver.notification.ExpiryNotificationHelper
+import com.example.fridgefoodsaver.notification.NotificationScheduler
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import java.util.TimeZone
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -33,12 +39,22 @@ class DashboardActivity : AppCompatActivity() {
         FoodDatabase.getDatabase(applicationContext).foodDao()
     }
 
+    private val notificationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                setupExpiryReminder()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
         bindViews()
         setupBottomNavigation()
+        requestNotificationPermission()
         observeFoodDatabase()
     }
 
@@ -53,14 +69,14 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+
         bottomNavigation.selectedItemId = R.id.nav_home
 
         bottomNavigation.setOnItemSelectedListener { item ->
+
             when (item.itemId) {
 
-                R.id.nav_home -> {
-                    true
-                }
+                R.id.nav_home -> true
 
                 R.id.nav_inventory -> {
                     openPage(InventoryActivity::class.java)
@@ -91,37 +107,101 @@ class DashboardActivity : AppCompatActivity() {
         startActivity(Intent(this, destination))
     }
 
+    private fun requestNotificationPermission() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+            val permission = Manifest.permission.POST_NOTIFICATIONS
+
+            val permissionStatus = ContextCompat.checkSelfPermission(
+                this,
+                permission
+            )
+
+            if (permissionStatus != PackageManager.PERMISSION_GRANTED) {
+                notificationPermissionLauncher.launch(permission)
+                return
+            }
+        }
+
+        setupExpiryReminder()
+    }
+
+    private fun setupExpiryReminder() {
+
+        val preferences = getSharedPreferences(
+            "fridge_settings",
+            MODE_PRIVATE
+        )
+
+        val reminderEnabled = preferences.getBoolean(
+            "reminder_enabled",
+            true
+        )
+
+        ExpiryNotificationHelper.createNotificationChannel(this)
+
+        if (reminderEnabled) {
+            NotificationScheduler.scheduleDailyNotification(
+                applicationContext
+            )
+        } else {
+            NotificationScheduler.cancelDailyNotification(
+                applicationContext
+            )
+        }
+    }
+
     private fun observeFoodDatabase() {
+
         lifecycleScope.launch {
+
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+
                 foodDao.getAllFood().collect { foodList ->
+
                     updateDashboard(foodList)
+
                 }
             }
         }
     }
 
     private fun updateDashboard(foodList: List<FoodItem>) {
+
+
         tvTotalFood.text = foodList.size.toString()
 
+
         val attentionList = foodList.mapNotNull { food ->
+
             val days = getDaysUntilExpiry(food.expiryDate)
+
             if (days != null && days <= 3) {
                 Pair(food, days)
             } else {
                 null
             }
+
         }.sortedBy { it.second }
 
-        val expiringCount = attentionList.count { it.second >= 0 }
+
+        val expiringCount = attentionList.count {
+            it.second >= 0
+        }
+
         tvExpiringFood.text = expiringCount.toString()
+
 
         alertContainer.removeAllViews()
 
         if (attentionList.isEmpty()) {
+
             tvEmptyAlert.visibility = View.VISIBLE
             alertContainer.visibility = View.GONE
+
         } else {
+
             tvEmptyAlert.visibility = View.GONE
             alertContainer.visibility = View.VISIBLE
 
@@ -130,14 +210,18 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
+
         recentContainer.removeAllViews()
 
         val recentList = foodList.take(3)
 
         if (recentList.isEmpty()) {
+
             tvEmptyRecent.visibility = View.VISIBLE
             recentContainer.visibility = View.GONE
+
         } else {
+
             tvEmptyRecent.visibility = View.GONE
             recentContainer.visibility = View.VISIBLE
 
@@ -148,38 +232,60 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun addAlertItem(food: FoodItem, days: Int) {
+
         val itemLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(0, 10, 0, 10)
         }
 
         val nameText = TextView(this).apply {
-            text = food.name
+            text = "${getFoodEmoji(food.category)} ${food.name}"
             textSize = 15f
-            setTextColor(android.graphics.Color.rgb(38, 61, 50))
+            setTextColor(getColor(R.color.text_dark))
             setTypeface(null, Typeface.BOLD)
         }
 
         val statusText = TextView(this).apply {
+
             text = when {
-                days < 0 -> "Sudah kedaluwarsa ${-days} hari"
-                days == 0 -> "Kedaluwarsa hari ini"
-                else -> "Kedaluwarsa dalam $days hari"
+                days < 0 ->
+                    "Sudah kedaluwarsa ${-days} hari"
+
+                days == 0 ->
+                    "Kedaluwarsa hari ini"
+
+                days == 1 ->
+                    "Kedaluwarsa dalam 1 hari"
+
+                else ->
+                    "Kedaluwarsa dalam $days hari"
             }
+
             textSize = 13f
-            setTextColor(android.graphics.Color.rgb(212, 107, 53))
+
+            setTextColor(
+                if (days <= 1) {
+                    getColor(R.color.expiry_red)
+                } else {
+                    getColor(R.color.warm_orange)
+                }
+            )
         }
 
         itemLayout.addView(nameText)
         itemLayout.addView(statusText)
+
         alertContainer.addView(itemLayout)
     }
 
     private fun addRecentItem(food: FoodItem) {
+
         val itemText = TextView(this).apply {
+
             text = "${getFoodEmoji(food.category)}  ${food.name}  •  ${food.quantity}"
+
             textSize = 14f
-            setTextColor(android.graphics.Color.rgb(38, 61, 50))
+            setTextColor(getColor(R.color.text_dark))
             setPadding(0, 12, 0, 12)
         }
 
@@ -187,43 +293,58 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun getFoodEmoji(category: String): String {
-        return when (category.lowercase(Locale.getDefault())) {
+
+        return when (category.trim().lowercase(Locale.ROOT)) {
+
             "sayuran" -> "🥬"
-            "buah" -> "🍎"
+            "buah-buahan", "buah" -> "🍎"
             "daging" -> "🥩"
-            "ikan" -> "🐟"
-            "minuman" -> "🥛"
-            "produk susu" -> "🧀"
+            "seafood", "ikan" -> "🐟"
+            "susu dan olahan", "produk susu" -> "🥛"
+            "telur" -> "🥚"
+            "minuman" -> "🥤"
             "bumbu" -> "🧂"
+
             else -> "🍱"
         }
     }
 
     private fun getDaysUntilExpiry(expiryDate: String): Int? {
+
         return try {
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            dateFormat.isLenient = false
-            dateFormat.timeZone = TimeZone.getTimeZone("UTC")
 
-            val expiry = dateFormat.parse(expiryDate) ?: return null
+            val formatter = SimpleDateFormat(
+                "dd/MM/yyyy",
+                Locale.getDefault()
+            ).apply {
+                isLenient = false
+            }
 
-            val todayCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-            todayCalendar.set(Calendar.HOUR_OF_DAY, 0)
-            todayCalendar.set(Calendar.MINUTE, 0)
-            todayCalendar.set(Calendar.SECOND, 0)
-            todayCalendar.set(Calendar.MILLISECOND, 0)
+            val parsedDate = formatter.parse(expiryDate)
+                ?: return null
 
-            val expiryCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-            expiryCalendar.time = expiry
-            expiryCalendar.set(Calendar.HOUR_OF_DAY, 0)
-            expiryCalendar.set(Calendar.MINUTE, 0)
-            expiryCalendar.set(Calendar.SECOND, 0)
-            expiryCalendar.set(Calendar.MILLISECOND, 0)
+            val expiryCalendar = Calendar.getInstance().apply {
+                time = parsedDate
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
 
-            val difference = expiryCalendar.timeInMillis -
-                    todayCalendar.timeInMillis
+            val todayCalendar = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
 
-            (difference / (24 * 60 * 60 * 1000)).toInt()
+            val difference =
+                expiryCalendar.timeInMillis -
+                        todayCalendar.timeInMillis
+
+            (
+                    difference / (24 * 60 * 60 * 1000L)
+                    ).toInt()
 
         } catch (e: Exception) {
             null
