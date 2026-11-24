@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.FirebaseAuthException
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
+
     private lateinit var btnRegister: Button
     private lateinit var tvLogin: TextView
 
@@ -32,6 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.etRegisterEmail)
         etPassword = findViewById(R.id.etRegisterPassword)
         etConfirmPassword = findViewById(R.id.etConfirmPassword)
+
         btnRegister = findViewById(R.id.btnRegister)
         tvLogin = findViewById(R.id.tvLogin)
 
@@ -51,13 +54,13 @@ class RegisterActivity : AppCompatActivity() {
         val password = etPassword.text.toString()
         val confirmPassword = etConfirmPassword.text.toString()
 
-        if (name == "") {
+        if (name.isEmpty()) {
             etName.error = "Nama wajib diisi"
             etName.requestFocus()
             return
         }
 
-        if (email == "") {
+        if (email.isEmpty()) {
             etEmail.error = "Email wajib diisi"
             etEmail.requestFocus()
             return
@@ -69,7 +72,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        if (password == "") {
+        if (password.isEmpty()) {
             etPassword.error = "Password wajib diisi"
             etPassword.requestFocus()
             return
@@ -81,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        if (confirmPassword == "") {
+        if (confirmPassword.isEmpty()) {
             etConfirmPassword.error = "Konfirmasi password wajib diisi"
             etConfirmPassword.requestFocus()
             return
@@ -105,53 +108,51 @@ class RegisterActivity : AppCompatActivity() {
         setLoading(true)
 
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
+            .addOnCompleteListener(this) { task ->
 
                 if (task.isSuccessful) {
 
                     val user = auth.currentUser
 
-                    if (user != null) {
-
-                        val profileUpdates =
-                            UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .build()
-
-                        user.updateProfile(profileUpdates)
-                            .addOnCompleteListener { profileTask ->
-
-                                setLoading(false)
-
-                                if (profileTask.isSuccessful) {
-                                    Toast.makeText(
-                                        this,
-                                        "Registrasi berhasil!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Akun dibuat. Nama profil belum tersimpan.",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-
-                                openDashboard()
-                            }
-
-                    } else {
-
+                    if (user == null) {
                         setLoading(false)
-
                         Toast.makeText(
                             this,
-                            "Akun dibuat, silakan login.",
+                            "Akun berhasil dibuat, tetapi sesi tidak ditemukan.",
                             Toast.LENGTH_LONG
                         ).show()
-
-                        openDashboard()
+                        return@addOnCompleteListener
                     }
+
+                    val profileUpdates =
+                        UserProfileChangeRequest.Builder()
+                            .setDisplayName(name)
+                            .build()
+
+                    user.updateProfile(profileUpdates)
+                        .addOnCompleteListener(this) { profileTask ->
+
+                            setLoading(false)
+
+                            if (profileTask.isSuccessful) {
+
+                                Toast.makeText(
+                                    this,
+                                    "Registrasi berhasil!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            } else {
+
+                                Toast.makeText(
+                                    this,
+                                    "Akun dibuat, tetapi nama profil belum tersimpan.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            openDashboard()
+                        }
 
                 } else {
 
@@ -171,10 +172,10 @@ class RegisterActivity : AppCompatActivity() {
         btnRegister.isEnabled = !isLoading
         tvLogin.isEnabled = !isLoading
 
-        if (isLoading) {
-            btnRegister.text = "Creating Account..."
+        btnRegister.text = if (isLoading) {
+            "Mendaftarkan..."
         } else {
-            btnRegister.text = "Create Account"
+            "Daftar"
         }
     }
 
@@ -182,8 +183,9 @@ class RegisterActivity : AppCompatActivity() {
 
         val intent = Intent(this, DashboardActivity::class.java)
 
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         startActivity(intent)
         finish()
@@ -191,27 +193,24 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun getFirebaseErrorMessage(exception: Exception?): String {
 
-        val message: String
+        val code = (exception as? FirebaseAuthException)?.errorCode
 
-        if (exception != null) {
-            message = exception.message ?: ""
-        } else {
-            message = ""
-        }
+        return when (code) {
 
-        return when {
-
-            message.contains("already in use", ignoreCase = true) ->
+            "ERROR_EMAIL_ALREADY_IN_USE" ->
                 "Email sudah terdaftar. Silakan login."
 
-            message.contains("invalid email", ignoreCase = true) ->
+            "ERROR_INVALID_EMAIL" ->
                 "Format email tidak valid."
 
-            message.contains("weak password", ignoreCase = true) ->
-                "Password terlalu lemah. Gunakan minimal 6 karakter."
+            "ERROR_WEAK_PASSWORD" ->
+                "Password terlalu lemah."
 
-            message.contains("network", ignoreCase = true) ->
+            "ERROR_NETWORK_REQUEST_FAILED" ->
                 "Koneksi internet bermasalah."
+
+            "ERROR_TOO_MANY_REQUESTS" ->
+                "Terlalu banyak percobaan. Coba lagi nanti."
 
             else ->
                 "Registrasi gagal. Periksa data dan koneksi internet."

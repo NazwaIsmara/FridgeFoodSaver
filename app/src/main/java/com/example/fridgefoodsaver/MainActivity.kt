@@ -1,4 +1,3 @@
-
 package com.example.fridgefoodsaver
 
 import android.content.Intent
@@ -7,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.fridgefoodsaver.notification.NotificationScheduler
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,13 +15,14 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        // Menghubungkan komponen dari XML
+
+        NotificationScheduler.scheduleDailyNotification(applicationContext)
+
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvRegister = findViewById<TextView>(R.id.tvRegister)
 
-        // Fungsi tombol Login
         btnLogin.setOnClickListener {
 
             val email = etEmail.text.toString().trim()
@@ -45,8 +46,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        // Fungsi menuju halaman Sign Up
         tvRegister.setOnClickListener {
 
             val intent = Intent(

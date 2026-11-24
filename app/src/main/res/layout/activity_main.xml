@@ -12,7 +12,6 @@
         android:gravity="center_horizontal"
         android:padding="28dp">
 
-        <!-- Logo -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +19,6 @@
             android:text="🥬"
             android:textSize="58sp" />
 
-        <!-- Nama Aplikasi -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +28,7 @@
             android:textSize="27sp"
             android:textStyle="bold" />
 
-        <!-- Deskripsi -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +37,6 @@
             android:textColor="@color/text_gray"
             android:textSize="14sp" />
 
-        <!-- Ilustrasi -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="145dp"
@@ -51,7 +48,6 @@
             android:textSize="22sp"
             android:lineSpacingExtra="5dp" />
 
-        <!-- Judul Login -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +65,7 @@
             android:textColor="@color/text_gray"
             android:textSize="14sp" />
 
-        <!-- Label Email -->
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +75,7 @@
             android:textStyle="bold"
             android:textSize="14sp" />
 
-        <!-- Input Email -->
+
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
@@ -94,7 +90,7 @@
             android:textColorHint="@color/text_gray"
             android:textSize="14sp" />
 
-        <!-- Label Password -->
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +100,7 @@
             android:textStyle="bold"
             android:textSize="14sp" />
 
-        <!-- Input Password -->
+
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
@@ -119,7 +115,6 @@
             android:textColorHint="@color/text_gray"
             android:textSize="14sp" />
 
-        <!-- Tombol Login -->
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
@@ -133,7 +128,6 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Registrasi -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,7 +152,7 @@
 
         </LinearLayout>
 
-        <!-- Footer -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

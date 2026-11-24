@@ -9,15 +9,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    private lateinit var etLoginEmail: EditText
-    private lateinit var etLoginPassword: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
-    private lateinit var tvRegister: TextView
+    private lateinit var tvGoToRegister: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,83 +26,133 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-
-        if (auth.currentUser != null) {
-            openDashboard()
-            return
-        }
-
-        etLoginEmail = findViewById(R.id.etLoginEmail)
-        etLoginPassword = findViewById(R.id.etLoginPassword)
+        etEmail = findViewById(R.id.etLoginEmail)
+        etPassword = findViewById(R.id.etLoginPassword)
         btnLogin = findViewById(R.id.btnLogin)
-        tvRegister = findViewById(R.id.tvRegister)
+        tvGoToRegister = findViewById(R.id.tvGoToRegister)
 
         btnLogin.setOnClickListener {
             loginUser()
         }
 
-        tvRegister.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+        tvGoToRegister.setOnClickListener {
+            startActivity(
+                Intent(this, RegisterActivity::class.java)
+            )
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Periksa apakah pengguna masih memiliki sesi login
+        if (::auth.isInitialized && auth.currentUser != null) {
+            openDashboard()
         }
     }
 
     private fun loginUser() {
-        val email = etLoginEmail.text.toString().trim()
-        val password = etLoginPassword.text.toString()
+
+        val email = etEmail.text.toString().trim()
+        val password = etPassword.text.toString()
 
         if (email.isEmpty()) {
-            etLoginEmail.error = "Email harus diisi"
-            etLoginEmail.requestFocus()
+            etEmail.error = "Email wajib diisi"
+            etEmail.requestFocus()
             return
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etLoginEmail.error = "Format email tidak valid"
-            etLoginEmail.requestFocus()
+            etEmail.error = "Format email tidak valid"
+            etEmail.requestFocus()
             return
         }
 
         if (password.isEmpty()) {
-            etLoginPassword.error = "Password harus diisi"
-            etLoginPassword.requestFocus()
+            etPassword.error = "Password wajib diisi"
+            etPassword.requestFocus()
             return
         }
 
-        btnLogin.isEnabled = false
-        btnLogin.text = "Memproses..."
+        setLoading(true)
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
-                btnLogin.isEnabled = true
-                btnLogin.text = "Login"
+
+                setLoading(false)
 
                 if (task.isSuccessful) {
+
                     Toast.makeText(
                         this,
-                        "Login berhasil",
+                        "Login berhasil!",
                         Toast.LENGTH_SHORT
                     ).show()
 
                     openDashboard()
+
                 } else {
-                    val message = when (task.exception?.message) {
-                        else -> "Login gagal. Periksa email dan password."
-                    }
 
                     Toast.makeText(
                         this,
-                        message,
+                        getFirebaseErrorMessage(task.exception),
                         Toast.LENGTH_LONG
                     ).show()
                 }
             }
     }
 
+    private fun setLoading(isLoading: Boolean) {
+
+        btnLogin.isEnabled = !isLoading
+        tvGoToRegister.isEnabled = !isLoading
+
+        btnLogin.text = if (isLoading) {
+            "Memproses..."
+        } else {
+            "Masuk"
+        }
+    }
+
     private fun openDashboard() {
+
         val intent = Intent(this, DashboardActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        intent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+
         startActivity(intent)
         finish()
+    }
+
+    private fun getFirebaseErrorMessage(exception: Exception?): String {
+
+        val code = (exception as? FirebaseAuthException)?.errorCode
+
+        return when (code) {
+
+            "ERROR_INVALID_EMAIL" ->
+                "Format email tidak valid."
+
+            "ERROR_USER_NOT_FOUND" ->
+                "Akun tidak ditemukan."
+
+            "ERROR_WRONG_PASSWORD",
+            "ERROR_INVALID_CREDENTIAL" ->
+                "Email atau password salah."
+
+            "ERROR_USER_DISABLED" ->
+                "Akun telah dinonaktifkan."
+
+            "ERROR_TOO_MANY_REQUESTS" ->
+                "Terlalu banyak percobaan. Coba lagi nanti."
+
+            "ERROR_NETWORK_REQUEST_FAILED" ->
+                "Koneksi internet bermasalah."
+
+            else ->
+                "Login gagal. Periksa email, password, dan koneksi internet."
+        }
     }
 }
