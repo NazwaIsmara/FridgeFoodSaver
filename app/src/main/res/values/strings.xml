@@ -5,4 +5,105 @@
     <string name="menu_add">Tambah</string>
     <string name="menu_notification">Notifikasi</string>
     <string name="menu_profile">Profil</string>
+
+    <string name="dashboard_subtitle">Kelola bahan makananmu dengan mudah.</string>
+    <string name="dashboard_welcome_title">Selamat datang!</string>
+    <string name="dashboard_welcome_desc">Pantau persediaan dan tanggal kedaluwarsa bahan makananmu.</string>
+    <string name="dashboard_search_hint">Cari bahan makanan...</string>
+    <string name="dashboard_summary_title">Ringkasan Persediaan</string>
+    <string name="dashboard_total_label">Total Bahan</string>
+    <string name="dashboard_expiring_label">Segera Kedaluwarsa</string>
+    <string name="dashboard_expired_label">Sudah Kedaluwarsa</string>
+    <string name="dashboard_alert_title">Perlu Diperhatikan</string>
+    <string name="dashboard_empty_alert">Belum ada bahan yang perlu diperhatikan.</string>
+    <string name="dashboard_recent_title">Bahan Makanan Terbaru</string>
+    <string name="dashboard_empty_recent">Belum ada bahan makanan.</string>
+    <string name="dashboard_badge_today">Hari ini</string>
+    <string name="dashboard_badge_one_day">1 hari lagi</string>
+    <string name="dashboard_badge_days">%1$d hari lagi</string>
+    <string name="dashboard_badge_expired">Lewat %1$d hr</string>
+
+    <string name="status_expired_days">Sudah kedaluwarsa %1$d hari</string>
+    <string name="status_today">Kedaluwarsa hari ini</string>
+    <string name="status_in_one_day">Kedaluwarsa dalam 1 hari</string>
+    <string name="status_in_days">Kedaluwarsa dalam %1$d hari</string>
+    <string name="status_safe_days">%1$d hari lagi</string>
+    <string name="status_no_expiry">Tanpa tanggal</string>
+    <string name="dashboard_recent_item_format">%1$s  %2$s  •  %3$s</string>
+
+    <string name="dashboard_see_all">Lihat semua &gt;</string>
+    <string name="dashboard_recent_subtitle_format">%1$s \u2022 \%2$s</string>
+    <string name="dashboard_fab_add_desc">Tambah bahan makanan</string>
+
+    <string name="inventory_back_desc">Kembali</string>
+    <string name="inventory_title">Inventaris</string>
+    <string name="inventory_subtitle">Daftar bahan makanan di kulkas</string>
+    <string name="inventory_search_hint">Cari bahan...</string>
+    <string name="inventory_filter_desc">Filter bahan makanan</string>
+    <string name="inventory_label_category">Kategori</string>
+    <string name="inventory_label_expiry">Status Kedaluwarsa</string>
+    <string name="inventory_count_default">Total bahan makanan: 0</string>
+    <string name="inventory_count_format">Menampilkan %1$d dari \%2$d bahan</string>
+    <string name="inventory_empty_all">Belum ada bahan makanan.</string>
+    <string name="inventory_empty_filtered">Bahan makanan tidak ditemukan.</string>
+
+    <string name="inventory_card_meta_format">%1$s \u2022 \%2$s</string>
+    <string name="inventory_expiry_date_format">Kedaluwarsa: %1$s</string>
+    <string name="inventory_notes_format">Catatan: %1$s</string>
+    <string name="inventory_btn_detail">Detail</string>
+    <string name="inventory_btn_edit">Edit</string>
+    <string name="inventory_btn_delete">Hapus</string>
+
+    <string name="inventory_delete_title">Hapus Bahan Makanan</string>
+    <string name="inventory_delete_message">Apakah kamu yakin ingin menghapus %1$s?</string>
+    <string name="inventory_btn_cancel">Batal</string>
+    <string name="inventory_delete_success">Bahan berhasil dihapus</string>
+    <string name="inventory_delete_error">Gagal menghapus: %1$s</string>
+
+    <string name="expiry_status_safe">Masih Aman</string>
+    <string name="expiry_status_soon">Segera Kedaluwarsa</string>
+    <string name="expiry_status_today">Kedaluwarsa Hari Ini</string>
+    <string name="expiry_status_expired">Sudah Kedaluwarsa</string>
+    <string name="expiry_status_invalid">Tanggal tidak valid</string>
+    <string name="expiry_badge_today">Hari ini</string>
+    <string name="expiry_badge_one_day">1 hari lagi</string>
+    <string name="expiry_badge_days">%1$d hari lagi</string>
+    <string name="expiry_badge_expired_days">Lewat %1$d hari</string>
+
+    <string name="inventory_chip_all">Semua</string>
+    <string name="inventory_chip_vegetable">Sayur</string>
+    <string name="inventory_chip_fruit">Buah</string>
+    <string name="inventory_chip_meat">Daging</string>
+    <string name="inventory_chip_seafood">Seafood</string>
+    <string name="inventory_chip_dairy">Susu</string>
+    <string name="inventory_chip_egg">Telur</string>
+    <string name="inventory_chip_drink">Minuman</string>
+    <string name="inventory_expiry_label_inline">Kedaluwarsa: %1$s</string>
+
+    <string name="detail_back_text">← Kembali</string>
+    <string name="detail_header_title">Detail Bahan</string>
+    <string name="detail_visual_caption">Informasi bahan makanan</string>
+    <string name="detail_info_section_title">Informasi Bahan</string>
+    <string name="detail_label_quantity">Jumlah Persediaan</string>
+    <string name="detail_label_expiry">Tanggal Kedaluwarsa</string>
+    <string name="detail_label_notes">Catatan</string>
+    <string name="detail_no_notes">Tidak ada catatan.</string>
+    <string name="detail_btn_edit">Edit Data</string>
+    <string name="detail_btn_delete">Hapus</string>
+
+    <string name="detail_alert_expired_title">Sudah kedaluwarsa!</string>
+    <string name="detail_alert_expired_desc">Bahan ini sudah melewati tanggal kedaluwarsa, periksa sebelum digunakan.</string>
+    <string name="detail_alert_today_title">Kedaluwarsa hari ini!</string>
+    <string name="detail_alert_today_desc">Gunakan bahan ini secepatnya hari ini.</string>
+    <string name="detail_alert_soon_title">Segera kedaluwarsa!</string>
+    <string name="detail_alert_soon_desc">Sisa %1$d hari lagi, prioritaskan untuk dimasak.</string>
+
+    <string name="detail_toast_not_ready">Data makanan belum tersedia</string>
+    <string name="detail_toast_missing_id">ID bahan makanan tidak ditemukan</string>
+    <string name="detail_toast_not_found">Data makanan tidak ditemukan</string>
+    <string name="detail_toast_deleted">Bahan makanan berhasil dihapus</string>
+    <string name="detail_dialog_delete_title">Hapus Bahan Makanan</string>
+    <string name="detail_dialog_delete_message">Apakah kamu yakin ingin menghapus %1$s?</string>
+    <string name="detail_dialog_btn_cancel">Batal</string>
+    <string name="detail_dialog_btn_delete">Hapus</string>
 </resources>

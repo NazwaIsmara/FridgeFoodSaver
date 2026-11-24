@@ -10,4 +10,5 @@
     <color name="text_dark">#29372C</color>
     <color name="text_gray">#7B857C</color>
     <color name="input_background">#F0F3ED</color>
+    <color name="text_muted">#78847B</color>
 </resources>
