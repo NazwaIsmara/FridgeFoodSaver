@@ -1,124 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_white"
-    android:fillViewport="true">
+    android:background="#EEF5EE">
+
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/topGreenHeader"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:background="#4A834E"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingTop="44dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="← Kembali"
-            android:textColor="#355E3B"
-            android:textSize="16sp"
-            android:paddingBottom="20dp" />
+            android:padding="4dp"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
             android:text="Edit Bahan Makanan"
-            android:textColor="#355E3B"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:paddingBottom="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Perbarui informasi bahan makananmu."
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
-            android:paddingBottom="24dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nama Bahan Makanan" />
-
-        <EditText
-            android:id="@+id/etEditFoodName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Contoh: Wortel"
-            android:inputType="textCapSentences" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kategori"
-            android:paddingTop="12dp" />
-
-        <Spinner
-            android:id="@+id/spEditCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Jumlah"
-            android:paddingTop="12dp" />
-
-        <EditText
-            android:id="@+id/etEditQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Contoh: 2"
-            android:inputType="numberDecimal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Satuan"
-            android:paddingTop="12dp" />
-
-        <Spinner
-            android:id="@+id/spEditUnit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tanggal Kedaluwarsa"
-            android:paddingTop="12dp" />
-
-        <EditText
-            android:id="@+id/etEditExpiryDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="dd/MM/yyyy"
-            android:focusable="false"
-            android:clickable="true" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Catatan"
-            android:paddingTop="12dp" />
-
-        <EditText
-            android:id="@+id/etEditNotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tambahkan catatan (opsional)"
-            android:gravity="top"
-            android:minLines="3"
-            android:inputType="textMultiLine" />
-
-        <Button
-            android:id="@+id/btnUpdateFood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Simpan Perubahan"
-            android:layout_marginTop="24dp" />
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-</ScrollView>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomUpdateContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topGreenHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="18dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="18dp">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#DAE6DA"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nama Bahan Makanan *"
+                        android:textColor="#263D32"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etEditFoodName"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:hint="Contoh: Wortel"
+                        android:inputType="textCapSentences"
+                        android:paddingHorizontal="14dp"
+                        android:singleLine="true"
+                        android:textColor="#263D32"
+                        android:textColorHint="#8A968D"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="Kategori *"
+                        android:textColor="#263D32"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spEditCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:paddingHorizontal="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="Jumlah *"
+                        android:textColor="#263D32"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/etEditQuantity"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_input"
+                            android:hint="Contoh: 2"
+                            android:inputType="numberDecimal"
+                            android:paddingHorizontal="14dp"
+                            android:singleLine="true"
+                            android:textColor="#263D32"
+                            android:textColorHint="#8A968D"
+                            android:textSize="14sp" />
+
+                        <Spinner
+                            android:id="@+id/spEditUnit"
+                            android:layout_width="126dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/bg_input"
+                            android:paddingHorizontal="8dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="Tanggal Kedaluwarsa *"
+                        android:textColor="#263D32"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etEditExpiryDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:clickable="true"
+                        android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+                        android:drawablePadding="10dp"
+                        android:focusable="false"
+                        android:hint="dd/MM/yyyy"
+                        android:paddingHorizontal="14dp"
+                        android:singleLine="true"
+                        android:textColor="#263D32"
+                        android:textColorHint="#8A968D"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="Catatan"
+                        android:textColor="#263D32"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etEditNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="96dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="top"
+                        android:hint="Tambahkan catatan (opsional)"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:padding="14dp"
+                        android:textColor="#263D32"
+                        android:textColorHint="#8A968D"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/bottomUpdateContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#EEF5EE"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUpdateFood"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:backgroundTint="#4A834E"
+            android:text="Simpan Perubahan"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

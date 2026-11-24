@@ -68,11 +68,9 @@ class AddFoodActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item,
             categories
         )
-
         categoryAdapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
-
         spCategory.adapter = categoryAdapter
 
         val units = listOf(
@@ -92,13 +90,10 @@ class AddFoodActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item,
             units
         )
-
         unitAdapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
-
         spUnit.adapter = unitAdapter
-
 
         etExpiryDate.isFocusable = false
         etExpiryDate.isClickable = true
@@ -113,20 +108,14 @@ class AddFoodActivity : AppCompatActivity() {
     }
 
     private fun showDatePicker() {
-
         val calendar = Calendar.getInstance()
 
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, day ->
-
                 val selectedDate = Calendar.getInstance()
-
                 selectedDate.set(year, month, day)
-
-                etExpiryDate.setText(
-                    dateFormat.format(selectedDate.time)
-                )
+                etExpiryDate.setText(dateFormat.format(selectedDate.time))
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -137,14 +126,12 @@ class AddFoodActivity : AppCompatActivity() {
     }
 
     private fun saveFood() {
-
         val name = etFoodName.text.toString().trim()
         val category = spCategory.selectedItem.toString()
         val quantityValue = etQuantity.text.toString().trim()
         val unit = spUnit.selectedItem.toString()
         val expiryDate = etExpiryDate.text.toString().trim()
         val notes = etNotes.text.toString().trim()
-
 
         if (name.isEmpty()) {
             etFoodName.error = "Nama bahan harus diisi"
@@ -167,7 +154,6 @@ class AddFoodActivity : AppCompatActivity() {
             return
         }
 
-
         val food = FoodItem(
             name = name,
             category = category,
@@ -177,16 +163,12 @@ class AddFoodActivity : AppCompatActivity() {
         )
 
         btnSaveFood.isEnabled = false
+        btnSaveFood.text = "Menyimpan..."
 
         lifecycleScope.launch {
-
             try {
-
                 withContext(Dispatchers.IO) {
-                    val database = FoodDatabase.getDatabase(
-                        applicationContext
-                    )
-
+                    val database = FoodDatabase.getDatabase(applicationContext)
                     database.foodDao().insertFood(food)
                 }
 
@@ -197,10 +179,9 @@ class AddFoodActivity : AppCompatActivity() {
                 ).show()
 
                 finish()
-
             } catch (e: Exception) {
-
                 btnSaveFood.isEnabled = true
+                btnSaveFood.text = "Simpan Bahan Makanan"
 
                 Toast.makeText(
                     this@AddFoodActivity,
