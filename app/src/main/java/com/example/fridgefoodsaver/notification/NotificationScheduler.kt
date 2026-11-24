@@ -2,9 +2,9 @@ package com.example.fridgefoodsaver.notification
 
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.OneTimeWorkRequestBuilder
 import java.util.concurrent.TimeUnit
 
 object NotificationScheduler {
@@ -12,7 +12,6 @@ object NotificationScheduler {
     private const val WORK_NAME = "daily_expiry_notification"
 
     fun scheduleDailyNotification(context: Context) {
-
         val workRequest =
             PeriodicWorkRequestBuilder<ExpiryNotificationWorker>(
                 24,
@@ -28,13 +27,11 @@ object NotificationScheduler {
     }
 
     fun cancelDailyNotification(context: Context) {
-
         WorkManager.getInstance(context)
             .cancelUniqueWork(WORK_NAME)
     }
 
     fun runTestNotification(context: Context) {
-
         val testRequest =
             OneTimeWorkRequestBuilder<ExpiryNotificationWorker>()
                 .build()
